@@ -42,8 +42,8 @@ if [ ! -f $keyfile ]; then
   fi
 fi
 
-if [ -f auth1_fms_$channel ]; then
-  rm -f auth1_fms_$channel
+if [ -f auth1_fms_${channel} ]; then
+  rm -f auth1_fms_${channel}
 fi
 
 #
@@ -58,7 +58,7 @@ wget -q \
      --post-data='\r\n' \
      --no-check-certificate \
      --save-headers \
-     -O auth1_fms_$channel \
+     -O auth1_fms_${channel} \
      https://radiko.jp/v2/api/auth1_fms
 
 if [ $? -ne 0 ]; then
@@ -69,18 +69,18 @@ fi
 #
 # get partial key
 #
-authtoken=`perl -ne 'print $1 if(/x-radiko-authtoken: ([\w-]+)/i)' auth1_fms_$channel`
-offset=`perl -ne 'print $1 if(/x-radiko-keyoffset: (\d+)/i)' auth1_fms_$channel`
-length=`perl -ne 'print $1 if(/x-radiko-keylength: (\d+)/i)' auth1_fms_$channel`
+authtoken=`perl -ne 'print $1 if(/x-radiko-authtoken: ([\w-]+)/i)' auth1_fms_${channel}`
+offset=`perl -ne 'print $1 if(/x-radiko-keyoffset: (\d+)/i)' auth1_fms_${channel}`
+length=`perl -ne 'print $1 if(/x-radiko-keylength: (\d+)/i)' auth1_fms_${channel}`
 
 partialkey=`dd if=$keyfile bs=1 skip=${offset} count=${length} 2> /dev/null | base64`
 
 echo "authtoken: ${authtoken} \noffset: ${offset} length: ${length} \npartialkey: $partialkey"
 
-rm -f auth1_fms_$channel
+rm -f auth1_fms_${channel}
 
-if [ -f auth2_fms_$channel ]; then
-  rm -f auth2_fms_$channel
+if [ -f auth2_fms_${channel} ]; then
+  rm -f auth2_fms_${channel}
 fi
 
 #
@@ -96,20 +96,20 @@ wget -q \
      --header="X-Radiko-Partialkey: ${partialkey}" \
      --post-data='\r\n' \
      --no-check-certificate \
-     -O auth2_fms_$channel \
+     -O auth2_fms_${channel} \
      https://radiko.jp/v2/api/auth2_fms
 
-if [ $? -ne 0 -o ! -f auth2_fms_$channel ]; then
+if [ $? -ne 0 -o ! -f auth2_fms_${channel} ]; then
   echo "failed auth2 process"
   exit 1
 fi
 
 echo "authentication success"
 
-areaid=`perl -ne 'print $1 if(/^([^,]+),/i)' auth2_fms_$channel`
+areaid=`perl -ne 'print $1 if(/^([^,]+),/i)' auth2_fms_${channel}`
 echo "areaid: $areaid"
 
-rm -f auth2_fms_$channel
+rm -f auth2_fms_${channel}
 
 #
 # get stream-url
@@ -136,7 +136,7 @@ rtmpdump -v \
          -W $playerurl \
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
-         --stop $DURATION \
+         --stop ${DURATION} \
          --flv "/tmp/${channel}_${date}"
 
 ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 128k "${outdir}/${channel}_${date}.mp3"
