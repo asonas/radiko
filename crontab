@@ -1,0 +1,16 @@
+# ANN
+0 1 * * 5 sh ~/bin/rec_radiko.sh LFR 121 ~/mp3/"ナインティナインのオールナイトニッポン "
+0 1 * * 7 sh ~/bin/rec_radiko.sh LFR 121 ~/mp3/"オードリーのオールナイトニッポン "
+
+# ANN0
+0 3 * * 5 sh ~/bin/rec_radiko.sh LFR 121 ~/mp3/"Hi-Hiのオールナイトニッポン0 "
+
+# JUNK
+0 1 * * 2 sh ~/bin/rec_radiko.sh TBS 121 ~/mp3/"JUNK 伊集院光・深夜の馬鹿力 "
+0 1 * * 3 sh ~/bin/rec_radiko.sh TBS 121 ~/mp3/"JUNK 爆笑問題カーボーイ "
+0 1 * * 4 sh ~/bin/rec_radiko.sh TBS 121 ~/mp3/"JUNK 山里亮太の不毛な議論 "
+0 1 * * 5 sh ~/bin/rec_radiko.sh TBS 121 ~/mp3/"JUNK おぎやはぎのメガネびいき "
+0 1 * * 6 sh ~/bin/rec_radiko.sh TBS 121 ~/mp3/"JUNK バナナマンのバナナムーンGOLD "
+
+# TSUTAYA 
+0 15 * * 5 sh ~/bin/rec_radiko.sh TBS 21 ~/mp3/"伊集院光の週末TSUTAYAに行ってこれ借りよう！ "
