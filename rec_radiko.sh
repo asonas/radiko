@@ -2,6 +2,7 @@
 
 pid=$$
 date=`date '+%Y-%m-%d-%H:%M'`
+radiodate=`TZ=RST-4 date +%Y年%m月%d日`
 playerurl=http://radiko.jp/player/swf/player_3.0.0.01.swf
 playerfile="/tmp/player.swf"
 keyfile="/tmp/authkey.png"
@@ -9,13 +10,13 @@ keyfile="/tmp/authkey.png"
 if [ $# -eq 2 ]; then
   channel=$1
   DURATION=`expr $2 \* 60`
-  outdir="."
+  outdir="./"
 elif [ $# -eq 3 ]; then
   channel=$1
   DURATION=`expr $2 \* 60`
   outdir=$3
 else
-  echo "usage : $0 channel_name duration(minuites) [outputdir]"
+  echo "usage : $0 channel_name duration(minuites) [output_basename]"
   exit 1
 fi
 
@@ -140,5 +141,5 @@ rtmpdump -v \
          --stop ${DURATION} \
          --flv "/tmp/${channel}_${date}"
 
-ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 128k "${outdir}/${channel}_${date}.mp3"
+ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 128k "${outdir}${radiodate}.mp3"
 rm -f "/tmp/${channel}_${date}"
