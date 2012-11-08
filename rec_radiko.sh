@@ -141,5 +141,4 @@ rtmpdump -v \
          --stop ${DURATION} \
          --flv "/tmp/${channel}_${date}"
 
-ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 128k "${outdir}${radiodate}.mp3"
-rm -f "/tmp/${channel}_${date}"
+ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 128k "${outdir}${radiodate}.mp3" && rm -f "/tmp/${channel}_${date}"
