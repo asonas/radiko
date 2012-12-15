@@ -15,3 +15,6 @@ MAILTO=j3tm0t0@gmail.com
 
 # TSUTAYA 
 59 14 * * 5 sh ~/bin/rec_radiko.sh TBS 22 ~/mp3/"伊集院光の週末TSUTAYAに行ってこれ借りよう！ "
+
+# 柳家喬太郎のキンキラ金曜日 
+59 19 * * 5 sh ~/bin/rec_radiko.sh FMT 57 ~/mp3/"柳家喬太郎のキンキラ金曜日 "
