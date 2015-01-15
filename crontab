@@ -1,4 +1,3 @@
-MAILTO=j3tm0t0@gmail.com
 # ANN
 59 0 * * 5 sh ~/bin/rec_radiko.sh LFR 122 ~/mp3/"ナインティナインのオールナイトニッポン "
 59 0 * * 7 sh ~/bin/rec_radiko.sh LFR 122 ~/mp3/"オードリーのオールナイトニッポン "
