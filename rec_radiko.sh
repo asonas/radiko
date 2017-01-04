@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 pid=$$
 date=`date '+%Y-%m-%d-%H:%M'`
@@ -79,7 +79,7 @@ partialkey=`dd if=$keyfile bs=1 skip=${offset} count=${length} 2> /dev/null | ba
 
 echo "authtoken: ${authtoken} \noffset: ${offset} length: ${length} \npartialkey: $partialkey"
 
-rm -f auth1_fms_${pid}
+#rm -f auth1_fms_${pid}
 
 if [ -f auth2_fms_${pid} ]; then
   rm -f auth2_fms_${pid}
@@ -123,7 +123,11 @@ fi
 
 wget -q "http://radiko.jp/v2/station/stream/${channel}.xml"
 
-stream_url=`echo "cat /url/item[1]/text()" | xmllint --shell ${channel}.xml | tail -2 | head -1`
+export PATH="$HOME/.rbenv/shims:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+echo ruby -v
+stream_url=`ruby /home/asonas/app/radiko/parser.rb ${channel}.xml`
 url_parts=(`echo ${stream_url} | perl -pe 's!^(.*)://(.*?)/(.*)/(.*?)$/!$1://$2 $3 $4!'`)
 
 rm -f ${channel}.xml
@@ -142,3 +146,4 @@ rtmpdump -v \
          --flv "/tmp/${channel}_${date}"
 
 ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 64k "${outdir}${radiodate}.mp3" && rm -f "/tmp/${channel}_${date}"
+ruby /home/asonas/app/radiko/podcast.rb
