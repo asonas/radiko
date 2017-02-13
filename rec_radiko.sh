@@ -1,5 +1,7 @@
-#!/bin/bash
-
+#!/bin/zsh
+set -x
+date=`date '+%Y-%m-%d-%H:%M'`
+radiodate=`TZ=RST-4 date +%Y年%m月%d日`
 playerurl=http://radiko.jp/apps/js/flash/myplayer-release.swf
 cookiefile=./cookie.txt
 playerfile=./player.swf
@@ -8,16 +10,23 @@ keyfile=./authkey.png
 if [ $# -eq 1 ]; then
   channel=$1
   output=./$1.flv
-elif [ $# -eq 2 ]; then
+  rectime=''
+elif [ $# -eq 3 ]; then
   channel=$1
-  output=$2
-elif [ $# -eq 4 ]; then
+  rectime=`expr $2 \* 60`
+  output=$3
+  echo "aaa"
+  echo $rectime 
+  echo $output
+
+elif [ $# -eq 5 ]; then
   channel=$1
-  output=$2
-  mail=$3
-  pass=$4
+  rectime=$2
+  output=$3
+  mail=$4
+  pass=$5
 else
-  echo "usage : $0 channel_name [outputfile] [mail] [pass]"
+  echo "usage : $0 channel_name [outputfile] [rectime] [mail] [pass]"
   exit 1
 fi
 
@@ -139,11 +148,7 @@ fi
 
 wget -q "http://radiko.jp/v2/station/stream/${channel}.xml"
 
-export PATH="$HOME/.rbenv/shims:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-echo ruby -v
-stream_url=`ruby /home/asonas/app/radiko/parser.rb ${channel}.xml`
+stream_url=`echo "cat /url/item[1]/text()" | xmllint --shell ${channel}.xml | tail -2 | head -1`
 url_parts=(`echo ${stream_url} | perl -pe 's!^(.*)://(.*?)/(.*)/(.*?)$/!$1://$2 $3 $4!'`)
 
 rm -f ${channel}.xml
@@ -158,5 +163,8 @@ rtmpdump -v \
          -W $playerurl \
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
-         --flv $output
+         --stop "${rectime}" \
+         --flv "/tmp/${channel}_${date}"
+
+ffmpeg -y -i "/tmp/${channel}_${date}" -acodec libmp3lame -ab 64k "${output}${radiodate}.mp3" && rm -f "/tmp/${channel}_${date}"
 ruby /home/asonas/app/radiko/podcast.rb
