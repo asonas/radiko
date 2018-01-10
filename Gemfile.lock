@@ -2,10 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     chronic (0.10.2)
-    mini_portile2 (2.0.0)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
-    whenever (0.9.7)
+    mini_portile2 (2.3.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
+    whenever (0.10.0)
       chronic (>= 0.6.3)
 
 PLATFORMS
@@ -16,4 +16,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.7
+   1.16.1
