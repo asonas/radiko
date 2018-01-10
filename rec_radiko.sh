@@ -1,5 +1,5 @@
 #!/bin/zsh
-set -x
+
 date=`date '+%Y-%m-%d-%H:%M'`
 radiodate=`TZ=RST-4 date +%Y年%m月%d日`
 playerurl=http://radiko.jp/apps/js/flash/myplayer-release.swf
@@ -16,7 +16,7 @@ elif [ $# -eq 3 ]; then
   rectime=`expr $2 \* 60`
   output=$3
   echo "aaa"
-  echo $rectime 
+  echo $rectime
   echo $output
 
 elif [ $# -eq 5 ]; then
