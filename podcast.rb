@@ -19,7 +19,7 @@ class Program
   end
 
   def files
-    Dir.glob("/home/asonas/app/radiko/public/mp3/#{title}").reverse
+    Dir.glob("/home/asonas/app/radiko/public/mp3/#{@title}").reverse
   end
 
   def build_episodes
@@ -68,6 +68,7 @@ class Program
 end
 
 YAML.load_file("programs.yml").each do |config|
+  p config
   config = Program.new(config)
   config.render
 end
