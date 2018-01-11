@@ -8,7 +8,7 @@ date_format = '%a, %d %b %Y %H:%M:%S %z'
 
 class Program
   attr_accessor :episodes
-  def initilize(config)
+  def initialize(config)
     @title = config[:title]
     @description = config[:description]
     @icon_path = config[:icon_path]
