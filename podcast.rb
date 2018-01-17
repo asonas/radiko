@@ -26,32 +26,33 @@ class Program
       url = "#{URL}/mp3/#{URI.encode_www_form_component(File.basename(file)).gsub("+", "%20")}"
 
       <<~XML
-        <item>
-          <title>#{File.basename(file).gsub(File.extname(file), "")}</title>
-          <description>#{@description}</description>
-          <itunes:author>asonas</itunes:author>
-          <itunes:subtitle>#{@title}</itunes:subtitle>
-          <itunes:summary>#{@title}</itunes:summary>
-          <enclosure url="#{url}" length="#{item_size_in_bytes}" type="audio/mpeg" />
-          <pubDate>#{@publishing_date}</pubDate>
-          <itunes:explicit>no</itunes:explicit>
-        </item>
+<item>
+  <title>#{File.basename(file).gsub(File.extname(file), "")}</title>
+  <description>#{@description}</description>
+  <itunes:author>asonas</itunes:author>
+  <itunes:subtitle>#{@title}</itunes:subtitle>
+  <itunes:summary>#{@title}</itunes:summary>
+  <enclosure url="#{url}" length="#{item_size_in_bytes}" type="audio/mpeg" />
+  <pubDate>#{@publishing_date}</pubDate>
+  <itunes:explicit>no</itunes:explicit>
+</item>
       XML
     end
   end
 
   def render
     content = <<~XML
-      <?xml version="1.0" encoding="UTF-8"?>
-      <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <channel>
-          <title>#{@title}</title>
-          <description>#{@description}</description>
-          <pubDate>#{@publishing_date}</pubDate>
-          <media:thumbnail url="#{URL}/#{@icon_path}" />
-          #{@episodes.join("\n")}
-        </channel>
-      </rss>
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>#{@title}</title>
+    <description>#{@description}</description>
+    <pubDate>#{@publishing_date}</pubDate>
+    <media:thumbnail url="#{URL}/#{@icon_path}" />
+    <media:thumbnail url="http://cdn.rebuild.fm/images/icon240.png" />
+    #{@episodes.join("\n")}
+  </channel>
+</rss>
     XML
 
     File.open("/home/asonas/app/radiko/public/#{@xml_filename}", 'w:UTF-8') do |fp|
