@@ -49,7 +49,6 @@ class Program
     <description>#{@description}</description>
     <pubDate>#{@publishing_date}</pubDate>
     <media:thumbnail url="#{URL}/#{@icon_path}" />
-    <media:thumbnail url="http://cdn.rebuild.fm/images/icon240.png" />
     #{@episodes.join("\n")}
   </channel>
 </rss>
