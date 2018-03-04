@@ -60,7 +60,7 @@ class Program
   end
 end
 
-YAML.load_file(File.expand_path("programs.yml"), __FILE__).each do |config|
+YAML.load_file(File.expand_path("/home/asonas/app/radiko/programs.yml")).each do |config|
   program = Program.new(config)
   program.render
 end
