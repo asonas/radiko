@@ -60,7 +60,7 @@ class Program
   end
 end
 
-YAML.load_file(File.expand_path("programs.yml")).each do |config|
-  config = Program.new(config)
-  config.render
+YAML.load_file(File.expand_path("programs.yml"), __FILE__).each do |config|
+  program = Program.new(config)
+  program.render
 end
