@@ -16,7 +16,7 @@ class Program
   end
 
   def files
-    Dir.glob("/home/asonas/app/radiko/public/mp3/#{@title}*").reverse
+    Dir.glob("/home/asonas/app/radiko/public/mp3/#{@title}*").sort.reverse
   end
 
   def build_episodes
@@ -27,7 +27,7 @@ class Program
 
       <<~XML
 <item>
-  <title>#{File.basename(file).gsub(File.extname(file), "")}</title>
+  <title>#{File.basename(file).gsub(File.extname(file), "").gsub("_", "")}</title>
   <description>#{@description}</description>
   <itunes:author>asonas</itunes:author>
   <itunes:subtitle>#{@title}</itunes:subtitle>
@@ -49,6 +49,8 @@ class Program
     <description>#{@description}</description>
     <pubDate>#{@publishing_date}</pubDate>
     <media:thumbnail url="#{URL}/#{@icon_path}" />
+    <itunes:image href="#{URL}/#{@icon_path}" />
+    <itunes:explicit>no</itunes:explicit>
     #{@episodes.join("\n")}
   </channel>
 </rss>
