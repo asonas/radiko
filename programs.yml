@@ -8,6 +8,7 @@
     「もてたいっすねぇ…でも外に出るのが面倒くさいから……きょうは、いや、明日は、いや、いいやもてなくて」的なスピリッツで毎週がんばったりがんばるフリだったりの放送をしていまーす。
   :icon_path: resources/ijuin_hikaru.jpg
   :xml_filename: ijuin_hikaru.rss
+  :kind: radio
 -
   :title: 伊集院光とらじおと
   :description: |-
@@ -15,6 +16,7 @@
     伊集院光が『と』で世の中や暮らしや関心を、明るく、楽しく、愉快につなぐ、情報・トークバラエティー番組。
   :icon_path: resources/ijuin_hikaruto.jpg
   :xml_filename: ijuin_hikaruto.rss
+  :kind: radio
 -
   :title: 上坂すみれの♡（はーと）をつければかわいかろう
   :description: |-
@@ -22,9 +24,11 @@
     本人の楽曲はもちろん、本人からのありがたーい言葉が聞けるコーナーなど上坂すみれワールドMAXで何がでてくるかは聴いてのお楽しみ。括目して聴くべし！
   :icon_path: resources/uesaka_sumire.jpg
   :xml_filename: uesaka_sumire.rss
+  :kind: radio
 -
   :title: 匿名ラジオ
   :description: |-
     毎週木曜0時更新。ARuFaとダ・ヴィンチ・恐山による、『匿名ラジオ』のチャンネルです。はたしていつまで続くのでしょうか。
   :icon_path: resources/tokumei.png
   :xml_filename: tokumei_radio.rss
+  :kind: youtube

@@ -19,17 +19,16 @@
 # Learn more: http://github.com/javan/whenever
 
 set :output, "/home/asonas/app/radiko/log/cron.log"
-exec_dir = "/home/asonas/app/radiko"
-save_dir = "/home/asonas/app/radiko/public/mp3"
+job_type :command, "cd :path && ':task' :output"
 
-every '0 1 * * 2'  do
-  command "bash #{exec_dir}/rec_radiko.sh TBS 121 #{save_dir}/JUNK伊集院光と深夜の馬鹿力-"
+every '0 3 * * 2'  do
+  command "CHANNEL=TBS RECORD_TIME=010000 RADIO_TITLE=JUNK伊集院光と深夜の馬鹿力 /usr/bin/env ruby recording.rb"
 end
 
-every '0 0 * * 0'  do
-  command "bash #{exec_dir}/rec_radiko.sh QRR 31 #{save_dir}/上坂すみれの♡（はーと）をつければかわいかろう-"
+every '0 1 * * 0'  do
+  command "CHANNEL=QRP RECORD_TIME=000000 RADIO_TITLE=上坂すみれの♡（はーと）をつければかわいかろう /usr/bin/env ruby recording.rb"
 end
 
-every '30 8 * * 1-5'  do
-  command "bash #{exec_dir}/rec_radiko.sh TBS 151 #{save_dir}/伊集院光とらじおと-"
+every '30 12 * * 1-5'  do
+  command "CHANNEL=TBS RECORD_TIME=083000 RADIO_TITLE=伊集院光とらじおと /usr/bin/env ruby recording.rb"
 end
