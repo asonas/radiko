@@ -1,3 +1,4 @@
+#!/bin/sh -x
 echo $CHANNEL
 echo $START_TIME
 docker run -it \
