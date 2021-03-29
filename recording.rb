@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'date'
+
 channel = ENV["CHANNEL"]
 
 start_datetime = ENV["START_DATETIME"] # 2020年１月１日8時0分0秒 -> 20210101080000
@@ -18,12 +19,15 @@ end
 parsed_start_time = Time.new start_time[0..3], start_time[4..5], start_time[6..7], start_time[8..9], start_time[10..11], start_time[12..13]
 
 puts parsed_start_time
-puts "docker run -it -v #{current_dir}/output:/output yyoshiki41/radigo rec -id=#{channel} -s=#{start_time}"
+volume_options = "-v /etc/group:/etc/group:ro -v /etc/passwd:/etc/passwd:ro -u $(id -u $USER):$(id -g $USER)"
+system "docker run -it #{volume_options} -v #{current_dir}/output:/output yyoshiki41/radigo rec -id=#{channel} -s=#{start_time}"
 
-target_dir = "/home/asonas/app/radiko/public/mp3"
+target_dir = "/home/asonas/app/radiko/public/mp3/"
 
-filename = "#{radio_title}-#{parsed_start_time.strftime('%Y年%m月%d日')}.mp3"
+filename = "#{radio_title}-#{parsed_start_time.strftime('%Y年%m月%d日')}.aac"
 
-FileUtils.mv "output/*", target_dir + filename
+Dir.glob("output/*.aac").each do |f|
+  FileUtils.mv f, target_dir + filename
+end
 
 system "ruby ./podcast.rb"
