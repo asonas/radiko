@@ -20,15 +20,17 @@
 
 set :output, "/home/asonas/app/radiko/log/cron.log"
 job_type :command, "cd :path && ':task' :output"
+ruby_path = "/home/asonas/.rbenv/shims/ruby"
+recording_script = "/home/asonas/app/radiko/recording.rb"
 
 every '0 3 * * 2'  do
-  command "CHANNEL=TBS RECORD_TIME=0100 RADIO_TITLE=JUNK伊集院光と深夜の馬鹿力 ruby recording.rb"
+  command "CHANNEL=TBS RECORDING_START_TIME=0100 RADIO_TITLE=JUNK伊集院光と深夜の馬鹿力 #{ruby_path} #{recording_script}"
 end
 
 every '0 1 * * 0'  do
-  command "CHANNEL=QRR RECORD_TIME=0000 RADIO_TITLE=上坂すみれの♡（はーと）をつければかわいかろう ruby recording.rb"
+  command "CHANNEL=QRR RECORDING_START_TIME=0000 RADIO_TITLE=上坂すみれの♡（はーと）をつければかわいかろう #{ruby_path} #{recording_script}"
 end
 
 every '30 12 * * 1-5'  do
-  command "CHANNEL=TBS RECORD_TIME=0830 RADIO_TITLE=伊集院光とらじおと ruby recording.rb"
+  command "CHANNEL=TBS RECORDING_START_TIME=0830 RADIO_TITLE=伊集院光とらじおと #{ruby_path} #{recording_script}"
 end
